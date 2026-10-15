@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Compress, resize and convert images, and strip their metadata. Everything runs in your browser.">
+  <title>nocloud.img</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="frame">
+    <header class="head">
+      <div class="orb" aria-hidden="true"></div>
+      <h1>nocloud<span>.img</span></h1>
+      <p class="lede">Compress, resize and convert images, and strip their metadata. Everything runs in your browser. Nothing is uploaded.</p>
+    </header>
+
+    <section class="stage" aria-label="Image">
+      <label class="drop" id="drop" for="file">
+        <input class="sr" id="file" type="file" accept="image/*">
+        <span class="drop-title">Drop an image</span>
+        <span class="drop-sub">Tap to choose, or paste from your clipboard.</span>
+      </label>
+
+      <figure class="preview" id="preview" hidden>
+        <div class="tabs" role="tablist" aria-label="Preview">
+          <button class="tab" type="button" role="tab" data-view="result" aria-selected="true">Result</button>
+          <button class="tab" type="button" role="tab" data-view="original" aria-selected="false">Original</button>
+          <label class="tab replace" for="file">Replace</label>
+        </div>
+        <div class="canvas">
+          <img id="img" alt="Preview of the processed image" decoding="async">
+        </div>
+        <figcaption id="caption"></figcaption>
+      </figure>
+
+      <p class="error" id="error" role="alert" hidden></p>
+    </section>
+
+    <div id="workspace" hidden>
+      <section class="block" aria-labelledby="h-format">
+        <header class="block-head"><span class="idx">01</span><h2 id="h-format">Format</h2></header>
+        <p class="hint">Output encoding. PNG is lossless, so quality does not apply.</p>
+        <div class="seg" id="formats" role="radiogroup" aria-label="Output format"></div>
+        <p class="note" id="format-note" hidden></p>
+        <div class="field" id="quality-field">
+          <div class="field-row">
+            <label for="quality">Quality</label>
+            <output id="quality-out" for="quality">80</output>
+          </div>
+          <input id="quality" type="range" min="1" max="100" step="1" value="80">
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="h-size">
+        <header class="block-head"><span class="idx">02</span><h2 id="h-size">Size</h2></header>
+        <p class="hint">Downscale only. Upscaling adds bytes, not detail.</p>
+        <div class="seg" id="chips" aria-label="Scale presets">
+          <button class="pill" type="button" id="lock" aria-pressed="true">Lock ratio</button>
+        </div>
+        <div class="size">
+          <label class="num"><span>Width</span><input id="width" type="number" inputmode="numeric" min="1" step="1"></label>
+          <span class="times" aria-hidden="true">&times;</span>
+          <label class="num"><span>Height</span><input id="height" type="number" inputmode="numeric" min="1" step="1"></label>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="h-meta">
+        <header class="block-head"><span class="idx">03</span><h2 id="h-meta">Metadata</h2></header>
+        <p class="hint">What the original carries. Export re-encodes through a canvas, so none of it survives.</p>
+        <dl class="meta" id="meta"></dl>
+        <p class="meta-note" id="meta-note"></p>
+      </section>
+    </div>
+  </main>
+
+  <div class="bar" id="bar" hidden>
+    <div class="bar-stats" aria-live="polite">
+      <span class="from" id="size-from"></span>
+      <span class="to-label">to</span>
+      <strong id="size-to"></strong>
+      <span class="delta" id="delta"></span>
+    </div>
+    <a class="btn" id="download" role="button">Download</a>
+  </div>
+</body>
+</html>
